@@ -33,10 +33,11 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "many-to-one",
             "otherEntityName": "event",
             "otherEntityRelationshipName": "program",
-            "relationshipName": "event"
+            "relationshipName": "event",
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20190826110127",

@@ -1,6 +1,4 @@
 package io.github.jhipster.application.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -47,14 +45,16 @@ public class Event implements Serializable {
     @Column(name = "end_date")
     private Instant endDate;
 
-    @ManyToMany(mappedBy = "events")
+    @OneToMany(mappedBy = "event")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
-    private Set<Participant> participants = new HashSet<>();
+    private Set<Program> programs = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("events")
-    private Program program;
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "event_participant",
+               joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
+    private Set<Participant> participants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -156,6 +156,31 @@ public class Event implements Serializable {
         this.endDate = endDate;
     }
 
+    public Set<Program> getPrograms() {
+        return programs;
+    }
+
+    public Event programs(Set<Program> programs) {
+        this.programs = programs;
+        return this;
+    }
+
+    public Event addProgram(Program program) {
+        this.programs.add(program);
+        program.setEvent(this);
+        return this;
+    }
+
+    public Event removeProgram(Program program) {
+        this.programs.remove(program);
+        program.setEvent(null);
+        return this;
+    }
+
+    public void setPrograms(Set<Program> programs) {
+        this.programs = programs;
+    }
+
     public Set<Participant> getParticipants() {
         return participants;
     }
@@ -179,19 +204,6 @@ public class Event implements Serializable {
 
     public void setParticipants(Set<Participant> participants) {
         this.participants = participants;
-    }
-
-    public Program getProgram() {
-        return program;
-    }
-
-    public Event program(Program program) {
-        this.program = program;
-        return this;
-    }
-
-    public void setProgram(Program program) {
-        this.program = program;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

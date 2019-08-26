@@ -42,12 +42,6 @@
                            formControlName="imageContentType" />
                 </div>
 
-                <div class="form-group">
-                    <label for="field_events">Event</label>
-                    <select class="form-control" id="field_events" multiple name="events" formControlName="events">
-                        <option [ngValue]="getSelected(editForm.get('events').value, eventOption)" *ngFor="let eventOption of events; trackBy: trackEventById">{{eventOption.name}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

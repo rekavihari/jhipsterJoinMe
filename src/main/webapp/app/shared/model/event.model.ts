@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
-import { IParticipant } from 'app/shared/model/participant.model';
 import { IProgram } from 'app/shared/model/program.model';
+import { IParticipant } from 'app/shared/model/participant.model';
 
 export interface IEvent {
   id?: number;
@@ -11,8 +11,8 @@ export interface IEvent {
   image?: any;
   startDate?: Moment;
   endDate?: Moment;
+  programs?: IProgram[];
   participants?: IParticipant[];
-  program?: IProgram;
 }
 
 export class Event implements IEvent {
@@ -25,7 +25,7 @@ export class Event implements IEvent {
     public image?: any,
     public startDate?: Moment,
     public endDate?: Moment,
-    public participants?: IParticipant[],
-    public program?: IProgram
+    public programs?: IProgram[],
+    public participants?: IParticipant[]
   ) {}
 }

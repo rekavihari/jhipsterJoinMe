@@ -42,17 +42,6 @@
 
     <changeSet id="20190826110125-1-relations" author="jhipster">
 
-        <createTable tableName="participant_event">
-            <column name="event_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="participant_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="participant_id, event_id" tableName="participant_event"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

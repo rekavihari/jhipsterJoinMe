@@ -3,11 +3,14 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IProgram, Program } from 'app/shared/model/program.model';
 import { ProgramService } from './program.service';
+import { IEvent } from 'app/shared/model/event.model';
+import { EventService } from 'app/entities/event';
 
 @Component({
   selector: 'jhi-program-update',
@@ -15,6 +18,8 @@ import { ProgramService } from './program.service';
 })
 export class ProgramUpdateComponent implements OnInit {
   isSaving: boolean;
+
+  events: IEvent[];
 
   editForm = this.fb.group({
     id: [],
@@ -25,13 +30,15 @@ export class ProgramUpdateComponent implements OnInit {
     latitude: [],
     longitude: [],
     startDate: [],
-    endDate: []
+    endDate: [],
+    event: []
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected programService: ProgramService,
+    protected eventService: EventService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -42,6 +49,13 @@ export class ProgramUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ program }) => {
       this.updateForm(program);
     });
+    this.eventService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IEvent[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IEvent[]>) => response.body)
+      )
+      .subscribe((res: IEvent[]) => (this.events = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(program: IProgram) {
@@ -54,7 +68,8 @@ export class ProgramUpdateComponent implements OnInit {
       latitude: program.latitude,
       longitude: program.longitude,
       startDate: program.startDate != null ? program.startDate.format(DATE_TIME_FORMAT) : null,
-      endDate: program.endDate != null ? program.endDate.format(DATE_TIME_FORMAT) : null
+      endDate: program.endDate != null ? program.endDate.format(DATE_TIME_FORMAT) : null,
+      event: program.event
     });
   }
 
@@ -126,7 +141,8 @@ export class ProgramUpdateComponent implements OnInit {
       longitude: this.editForm.get(['longitude']).value,
       startDate:
         this.editForm.get(['startDate']).value != null ? moment(this.editForm.get(['startDate']).value, DATE_TIME_FORMAT) : undefined,
-      endDate: this.editForm.get(['endDate']).value != null ? moment(this.editForm.get(['endDate']).value, DATE_TIME_FORMAT) : undefined
+      endDate: this.editForm.get(['endDate']).value != null ? moment(this.editForm.get(['endDate']).value, DATE_TIME_FORMAT) : undefined,
+      event: this.editForm.get(['event']).value
     };
   }
 
@@ -144,5 +160,9 @@ export class ProgramUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackEventById(index: number, item: IEvent) {
+    return item.id;
   }
 }

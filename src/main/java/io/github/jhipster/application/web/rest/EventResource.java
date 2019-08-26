@@ -89,13 +89,18 @@ public class EventResource {
      *
 
      * @param pageable the pagination information.
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of events in body.
      */
     @GetMapping("/events")
-    public ResponseEntity<List<Event>> getAllEvents(Pageable pageable) {
+    public ResponseEntity<List<Event>> getAllEvents(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of Events");
-        Page<Event> page = eventRepository.findAll(pageable);
+        Page<Event> page;
+        if (eagerload) {
+            page = eventRepository.findAllWithEagerRelationships(pageable);
+        } else {
+            page = eventRepository.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -109,7 +114,7 @@ public class EventResource {
     @GetMapping("/events/{id}")
     public ResponseEntity<Event> getEvent(@PathVariable Long id) {
         log.debug("REST request to get Event : {}", id);
-        Optional<Event> event = eventRepository.findById(id);
+        Optional<Event> event = eventRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(event);
     }
 

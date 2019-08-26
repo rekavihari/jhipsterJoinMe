@@ -24,7 +24,6 @@
             <th jhiSortBy="image"><span>Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="startDate"><span>Start Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="endDate"><span>End Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="program.id"><span>Program</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -42,11 +41,6 @@
                 </td>
                 <td>{{event.startDate | date:'medium'}}</td>
                 <td>{{event.endDate | date:'medium'}}</td>
-                <td>
-                    <div *ngIf="event.program">
-                        <a [routerLink]="['/program', event.program?.id, 'view' ]" >{{event.program?.id}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

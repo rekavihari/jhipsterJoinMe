@@ -33,6 +33,7 @@ export class ProgramUpdatePage {
   longitudeInput = element(by.id('field_longitude'));
   startDateInput = element(by.id('field_startDate'));
   endDateInput = element(by.id('field_endDate'));
+  eventSelect = element(by.id('field_event'));
 
   async getPageTitle() {
     return this.pageTitle.getText();
@@ -92,6 +93,25 @@ export class ProgramUpdatePage {
 
   async getEndDateInput() {
     return await this.endDateInput.getAttribute('value');
+  }
+
+  async eventSelectLastOption(timeout?: number) {
+    await this.eventSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async eventSelectOption(option) {
+    await this.eventSelect.sendKeys(option);
+  }
+
+  getEventSelect(): ElementFinder {
+    return this.eventSelect;
+  }
+
+  async getEventSelectedOption() {
+    return await this.eventSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

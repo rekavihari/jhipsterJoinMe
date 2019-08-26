@@ -30,7 +30,6 @@ export class ParticipantUpdatePage {
   emailInput = element(by.id('field_email'));
   phoneInput = element(by.id('field_phone'));
   imageInput = element(by.id('file_image'));
-  eventSelect = element(by.id('field_event'));
 
   async getPageTitle() {
     return this.pageTitle.getText();
@@ -66,25 +65,6 @@ export class ParticipantUpdatePage {
 
   async getImageInput() {
     return await this.imageInput.getAttribute('value');
-  }
-
-  async eventSelectLastOption(timeout?: number) {
-    await this.eventSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async eventSelectOption(option) {
-    await this.eventSelect.sendKeys(option);
-  }
-
-  getEventSelect(): ElementFinder {
-    return this.eventSelect;
-  }
-
-  async getEventSelectedOption() {
-    return await this.eventSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

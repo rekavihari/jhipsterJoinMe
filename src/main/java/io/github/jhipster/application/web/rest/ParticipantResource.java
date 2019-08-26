@@ -89,18 +89,13 @@ public class ParticipantResource {
      *
 
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of participants in body.
      */
     @GetMapping("/participants")
-    public ResponseEntity<List<Participant>> getAllParticipants(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Participant>> getAllParticipants(Pageable pageable) {
         log.debug("REST request to get a page of Participants");
-        Page<Participant> page;
-        if (eagerload) {
-            page = participantRepository.findAllWithEagerRelationships(pageable);
-        } else {
-            page = participantRepository.findAll(pageable);
-        }
+        Page<Participant> page = participantRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -114,7 +109,7 @@ public class ParticipantResource {
     @GetMapping("/participants/{id}")
     public ResponseEntity<Participant> getParticipant(@PathVariable Long id) {
         log.debug("REST request to get Participant : {}", id);
-        Optional<Participant> participant = participantRepository.findOneWithEagerRelationships(id);
+        Optional<Participant> participant = participantRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(participant);
     }
 

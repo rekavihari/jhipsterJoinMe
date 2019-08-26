@@ -49,8 +49,8 @@ describe('Event e2e test', () => {
       eventUpdatePage.setDescInput('desc'),
       eventUpdatePage.setImageInput(absolutePath),
       eventUpdatePage.setStartDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      eventUpdatePage.setEndDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      eventUpdatePage.programSelectLastOption()
+      eventUpdatePage.setEndDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM')
+      // eventUpdatePage.participantSelectLastOption(),
     ]);
     expect(await eventUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await eventUpdatePage.getDateInput()).to.eq('date', 'Expected Date value to be equals to date');

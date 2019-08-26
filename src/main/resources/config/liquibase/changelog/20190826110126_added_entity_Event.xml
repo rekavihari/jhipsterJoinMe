@@ -43,10 +43,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="program_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 
@@ -56,6 +52,17 @@
 
     <changeSet id="20190826110126-1-relations" author="jhipster">
 
+        <createTable tableName="event_participant">
+            <column name="participant_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="event_id, participant_id" tableName="event_participant"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
