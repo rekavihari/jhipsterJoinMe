@@ -1,14 +1,13 @@
 entity Participant {
-	name String,
-    email String,
+	name String required,
+    email String required,
     phone Integer,
     image ImageBlob
 }
 
 entity Event {
-	id String,
-    name String,
-    date String,
+	code String,
+    name String required,
     desc String,
     image ImageBlob,
     startDate Instant,
@@ -16,7 +15,7 @@ entity Event {
 }
 
 entity Program {
-    name String,
+    name String required,
     desc String,
     image ImageBlob,
     latitude Double,
