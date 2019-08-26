@@ -18,8 +18,8 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="code"><span>Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="date"><span>Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="desc"><span>Desc</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="image"><span>Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="startDate"><span>Start Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -30,8 +30,8 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let event of events ;trackBy: trackId">
                 <td><a [routerLink]="['/event', event.id, 'view' ]">{{event.id}}</a></td>
+                <td>{{event.code}}</td>
                 <td>{{event.name}}</td>
-                <td>{{event.date}}</td>
                 <td>{{event.desc}}</td>
                 <td>
                     <a *ngIf="event.image" (click)="openFile(event.imageContentType, event.image)">

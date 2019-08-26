@@ -3,6 +3,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -23,11 +24,12 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "code")
+    private String code;
 
-    @Column(name = "date")
-    private String date;
+    @NotNull
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "jhi_desc")
     private String desc;
@@ -65,6 +67,19 @@ public class Event implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public Event code(String code) {
+        this.code = code;
+        return this;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }
@@ -76,19 +91,6 @@ public class Event implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public Event date(String date) {
-        this.date = date;
-        return this;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getDesc() {
@@ -227,8 +229,8 @@ public class Event implements Serializable {
     public String toString() {
         return "Event{" +
             "id=" + getId() +
+            ", code='" + getCode() + "'" +
             ", name='" + getName() + "'" +
-            ", date='" + getDate() + "'" +
             ", desc='" + getDesc() + "'" +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +

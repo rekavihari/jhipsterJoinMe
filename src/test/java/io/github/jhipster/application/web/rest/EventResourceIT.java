@@ -41,11 +41,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = JhipsterJoinMeApp.class)
 public class EventResourceIT {
 
+    private static final String DEFAULT_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_CODE = "BBBBBBBBBB";
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_DATE = "AAAAAAAAAA";
-    private static final String UPDATED_DATE = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESC = "AAAAAAAAAA";
     private static final String UPDATED_DESC = "BBBBBBBBBB";
@@ -108,8 +108,8 @@ public class EventResourceIT {
      */
     public static Event createEntity(EntityManager em) {
         Event event = new Event()
+            .code(DEFAULT_CODE)
             .name(DEFAULT_NAME)
-            .date(DEFAULT_DATE)
             .desc(DEFAULT_DESC)
             .image(DEFAULT_IMAGE)
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
@@ -125,8 +125,8 @@ public class EventResourceIT {
      */
     public static Event createUpdatedEntity(EntityManager em) {
         Event event = new Event()
+            .code(UPDATED_CODE)
             .name(UPDATED_NAME)
-            .date(UPDATED_DATE)
             .desc(UPDATED_DESC)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
@@ -155,8 +155,8 @@ public class EventResourceIT {
         List<Event> eventList = eventRepository.findAll();
         assertThat(eventList).hasSize(databaseSizeBeforeCreate + 1);
         Event testEvent = eventList.get(eventList.size() - 1);
+        assertThat(testEvent.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testEvent.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testEvent.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testEvent.getDesc()).isEqualTo(DEFAULT_DESC);
         assertThat(testEvent.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testEvent.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
@@ -186,6 +186,24 @@ public class EventResourceIT {
 
     @Test
     @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = eventRepository.findAll().size();
+        // set the field null
+        event.setName(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc.perform(post("/api/events")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        List<Event> eventList = eventRepository.findAll();
+        assertThat(eventList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllEvents() throws Exception {
         // Initialize the database
         eventRepository.saveAndFlush(event);
@@ -195,8 +213,8 @@ public class EventResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
@@ -248,8 +266,8 @@ public class EventResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(event.getId().intValue()))
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
@@ -278,8 +296,8 @@ public class EventResourceIT {
         // Disconnect from session so that the updates on updatedEvent are not directly saved in db
         em.detach(updatedEvent);
         updatedEvent
+            .code(UPDATED_CODE)
             .name(UPDATED_NAME)
-            .date(UPDATED_DATE)
             .desc(UPDATED_DESC)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
@@ -295,8 +313,8 @@ public class EventResourceIT {
         List<Event> eventList = eventRepository.findAll();
         assertThat(eventList).hasSize(databaseSizeBeforeUpdate);
         Event testEvent = eventList.get(eventList.size() - 1);
+        assertThat(testEvent.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testEvent.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testEvent.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testEvent.getDesc()).isEqualTo(UPDATED_DESC);
         assertThat(testEvent.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testEvent.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);

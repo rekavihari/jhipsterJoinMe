@@ -77,8 +77,8 @@ describe('Service Tests', () => {
       it('should update a Event', async () => {
         const returnedFromService = Object.assign(
           {
+            code: 'BBBBBB',
             name: 'BBBBBB',
-            date: 'BBBBBB',
             desc: 'BBBBBB',
             image: 'BBBBBB',
             startDate: currentDate.format(DATE_TIME_FORMAT),
@@ -106,8 +106,8 @@ describe('Service Tests', () => {
       it('should return a list of Event', async () => {
         const returnedFromService = Object.assign(
           {
+            code: 'BBBBBB',
             name: 'BBBBBB',
-            date: 'BBBBBB',
             desc: 'BBBBBB',
             image: 'BBBBBB',
             startDate: currentDate.format(DATE_TIME_FORMAT),

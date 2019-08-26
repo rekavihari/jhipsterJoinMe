@@ -26,8 +26,8 @@ export class EventUpdatePage {
   pageTitle = element(by.id('jhi-event-heading'));
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
+  codeInput = element(by.id('field_code'));
   nameInput = element(by.id('field_name'));
-  dateInput = element(by.id('field_date'));
   descInput = element(by.id('field_desc'));
   imageInput = element(by.id('file_image'));
   startDateInput = element(by.id('field_startDate'));
@@ -38,20 +38,20 @@ export class EventUpdatePage {
     return this.pageTitle.getText();
   }
 
+  async setCodeInput(code) {
+    await this.codeInput.sendKeys(code);
+  }
+
+  async getCodeInput() {
+    return await this.codeInput.getAttribute('value');
+  }
+
   async setNameInput(name) {
     await this.nameInput.sendKeys(name);
   }
 
   async getNameInput() {
     return await this.nameInput.getAttribute('value');
-  }
-
-  async setDateInput(date) {
-    await this.dateInput.sendKeys(date);
-  }
-
-  async getDateInput() {
-    return await this.dateInput.getAttribute('value');
   }
 
   async setDescInput(desc) {
