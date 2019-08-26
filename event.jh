@@ -26,11 +26,11 @@ entity Program {
 }
 
 relationship OneToMany {
-	Program{event(name)} to Event
+	Event{program(name)} to Program{event(name)}
 }
 
 relationship ManyToMany {
-	Participant{event(name)} to Event{participant(email)}
+	Event{participant(email)} to Participant{event(name)}
 }
 
 // Set pagination options
