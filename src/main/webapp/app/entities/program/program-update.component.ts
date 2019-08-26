@@ -23,7 +23,7 @@ export class ProgramUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    name: [],
+    name: [null, [Validators.required]],
     desc: [],
     image: [],
     imageContentType: [],

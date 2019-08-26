@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -52,7 +53,7 @@ public class ProgramResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/programs")
-    public ResponseEntity<Program> createProgram(@RequestBody Program program) throws URISyntaxException {
+    public ResponseEntity<Program> createProgram(@Valid @RequestBody Program program) throws URISyntaxException {
         log.debug("REST request to save Program : {}", program);
         if (program.getId() != null) {
             throw new BadRequestAlertException("A new program cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +74,7 @@ public class ProgramResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/programs")
-    public ResponseEntity<Program> updateProgram(@RequestBody Program program) throws URISyntaxException {
+    public ResponseEntity<Program> updateProgram(@Valid @RequestBody Program program) throws URISyntaxException {
         log.debug("REST request to update Program : {}", program);
         if (program.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

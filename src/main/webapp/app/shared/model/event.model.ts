@@ -4,8 +4,8 @@ import { IParticipant } from 'app/shared/model/participant.model';
 
 export interface IEvent {
   id?: number;
+  code?: string;
   name?: string;
-  date?: string;
   desc?: string;
   imageContentType?: string;
   image?: any;
@@ -18,8 +18,8 @@ export interface IEvent {
 export class Event implements IEvent {
   constructor(
     public id?: number,
+    public code?: string,
     public name?: string,
-    public date?: string,
     public desc?: string,
     public imageContentType?: string,
     public image?: any,

@@ -21,8 +21,8 @@ export class ParticipantUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    name: [],
-    email: [],
+    name: [null, [Validators.required]],
+    email: [null, [Validators.required]],
     phone: [],
     image: [],
     imageContentType: []

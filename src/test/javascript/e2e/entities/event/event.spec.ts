@@ -44,16 +44,16 @@ describe('Event e2e test', () => {
 
     await eventComponentsPage.clickOnCreateButton();
     await promise.all([
+      eventUpdatePage.setCodeInput('code'),
       eventUpdatePage.setNameInput('name'),
-      eventUpdatePage.setDateInput('date'),
       eventUpdatePage.setDescInput('desc'),
       eventUpdatePage.setImageInput(absolutePath),
       eventUpdatePage.setStartDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       eventUpdatePage.setEndDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM')
       // eventUpdatePage.participantSelectLastOption(),
     ]);
+    expect(await eventUpdatePage.getCodeInput()).to.eq('code', 'Expected Code value to be equals to code');
     expect(await eventUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
-    expect(await eventUpdatePage.getDateInput()).to.eq('date', 'Expected Date value to be equals to date');
     expect(await eventUpdatePage.getDescInput()).to.eq('desc', 'Expected Desc value to be equals to desc');
     expect(await eventUpdatePage.getImageInput()).to.endsWith(fileNameToUpload, 'Expected Image value to be end with ' + fileNameToUpload);
     expect(await eventUpdatePage.getStartDateInput()).to.contain('2001-01-01T02:30', 'Expected startDate value to be equals to 2000-12-31');

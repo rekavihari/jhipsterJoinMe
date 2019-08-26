@@ -2,12 +2,15 @@
     "name": "Event",
     "fields": [
         {
-            "fieldName": "name",
+            "fieldName": "code",
             "fieldType": "String"
         },
         {
-            "fieldName": "date",
-            "fieldType": "String"
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "desc",

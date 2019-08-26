@@ -23,8 +23,8 @@ export class EventUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    name: [],
-    date: [],
+    code: [],
+    name: [null, [Validators.required]],
     desc: [],
     image: [],
     imageContentType: [],
@@ -60,8 +60,8 @@ export class EventUpdateComponent implements OnInit {
   updateForm(event: IEvent) {
     this.editForm.patchValue({
       id: event.id,
+      code: event.code,
       name: event.name,
-      date: event.date,
       desc: event.desc,
       image: event.image,
       imageContentType: event.imageContentType,
@@ -131,8 +131,8 @@ export class EventUpdateComponent implements OnInit {
     return {
       ...new Event(),
       id: this.editForm.get(['id']).value,
+      code: this.editForm.get(['code']).value,
       name: this.editForm.get(['name']).value,
-      date: this.editForm.get(['date']).value,
       desc: this.editForm.get(['desc']).value,
       imageContentType: this.editForm.get(['imageContentType']).value,
       image: this.editForm.get(['image']).value,

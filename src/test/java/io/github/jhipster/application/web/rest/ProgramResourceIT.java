@@ -186,6 +186,24 @@ public class ProgramResourceIT {
 
     @Test
     @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = programRepository.findAll().size();
+        // set the field null
+        program.setName(null);
+
+        // Create the Program, which fails.
+
+        restProgramMockMvc.perform(post("/api/programs")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(program)))
+            .andExpect(status().isBadRequest());
+
+        List<Program> programList = programRepository.findAll();
+        assertThat(programList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPrograms() throws Exception {
         // Initialize the database
         programRepository.saveAndFlush(program);

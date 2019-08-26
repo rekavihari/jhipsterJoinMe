@@ -163,6 +163,42 @@ public class ParticipantResourceIT {
 
     @Test
     @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = participantRepository.findAll().size();
+        // set the field null
+        participant.setName(null);
+
+        // Create the Participant, which fails.
+
+        restParticipantMockMvc.perform(post("/api/participants")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(participant)))
+            .andExpect(status().isBadRequest());
+
+        List<Participant> participantList = participantRepository.findAll();
+        assertThat(participantList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = participantRepository.findAll().size();
+        // set the field null
+        participant.setEmail(null);
+
+        // Create the Participant, which fails.
+
+        restParticipantMockMvc.perform(post("/api/participants")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(participant)))
+            .andExpect(status().isBadRequest());
+
+        List<Participant> participantList = participantRepository.findAll();
+        assertThat(participantList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllParticipants() throws Exception {
         // Initialize the database
         participantRepository.saveAndFlush(participant);
