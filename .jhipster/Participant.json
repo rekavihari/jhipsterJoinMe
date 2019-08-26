@@ -17,7 +17,7 @@
         },
         {
             "fieldName": "phone",
-            "fieldType": "Integer"
+            "fieldType": "Long"
         },
         {
             "fieldName": "image",

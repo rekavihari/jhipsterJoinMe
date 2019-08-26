@@ -33,7 +33,7 @@ public class Participant implements Serializable {
     private String email;
 
     @Column(name = "phone")
-    private Integer phone;
+    private Long phone;
 
     @Lob
     @Column(name = "image")
@@ -82,16 +82,16 @@ public class Participant implements Serializable {
         this.email = email;
     }
 
-    public Integer getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public Participant phone(Integer phone) {
+    public Participant phone(Long phone) {
         this.phone = phone;
         return this;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
