@@ -1,0 +1,41 @@
+entity Participant {
+	name String,
+    email String,
+    phone Integer,
+    image ImageBlob
+}
+
+entity Event {
+	id String,
+    name String,
+    date String,
+    desc String,
+    image ImageBlob,
+    startDate Instant,
+	endDate Instant
+}
+
+entity Program {
+    name String,
+    desc String,
+    image ImageBlob,
+    latitude Double,
+    longitude Double,
+    startDate Instant,
+	endDate Instant
+}
+
+relationship OneToMany {
+	Program{event(name)} to Event
+}
+
+relationship ManyToMany {
+	Participant{event(name)} to Event{participant(email)}
+}
+
+// Set pagination options
+paginate Program, Event, Participant with infinite-scroll
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
