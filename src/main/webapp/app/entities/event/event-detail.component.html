@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="event">
+            <h2><span>Event</span> {{event.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{event.name}}</span>
+                </dd>
+                <dt><span>Date</span></dt>
+                <dd>
+                    <span>{{event.date}}</span>
+                </dd>
+                <dt><span>Desc</span></dt>
+                <dd>
+                    <span>{{event.desc}}</span>
+                </dd>
+                <dt><span>Image</span></dt>
+                <dd>
+                    <div *ngIf="event.image">
+                        <a (click)="openFile(event.imageContentType, event.image)">
+                            <img [src]="'data:' + event.imageContentType + ';base64,' + event.image" style="max-width: 100%;" alt="event image"/>
+                        </a>
+                        {{event.imageContentType}}, {{byteSize(event.image)}}
+                    </div>
+                </dd>
+                <dt><span>Start Date</span></dt>
+                <dd>
+                    <span>{{event.startDate}}</span>
+                </dd>
+                <dt><span>End Date</span></dt>
+                <dd>
+                    <span>{{event.endDate}}</span>
+                </dd>
+                <dt><span>Program</span></dt>
+                <dd>
+                    <div *ngIf="event.program">
+                        <a [routerLink]="['/program', event.program?.id, 'view']">{{event.program?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/event', event.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
