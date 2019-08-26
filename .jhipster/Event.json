@@ -29,18 +29,18 @@
     ],
     "relationships": [
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "program",
+            "otherEntityRelationshipName": "event",
+            "relationshipName": "program"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityName": "participant",
             "otherEntityRelationshipName": "event",
             "relationshipName": "participant",
             "otherEntityField": "email",
-            "ownerSide": false
-        },
-        {
-            "relationshipName": "program",
-            "otherEntityName": "program",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190826110126",

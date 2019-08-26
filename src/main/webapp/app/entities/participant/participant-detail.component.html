@@ -26,12 +26,6 @@
                         {{participant.imageContentType}}, {{byteSize(participant.image)}}
                     </div>
                 </dd>
-                <dt><span>Event</span></dt>
-                <dd>
-                    <span *ngFor="let event of participant.events; let last = last">
-                        <a [routerLink]="['/event', event?.id, 'view' ]">{{event.name}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
             </dl>
 
             <button type="submit"

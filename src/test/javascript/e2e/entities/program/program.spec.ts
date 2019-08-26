@@ -50,7 +50,8 @@ describe('Program e2e test', () => {
       programUpdatePage.setLatitudeInput('5'),
       programUpdatePage.setLongitudeInput('5'),
       programUpdatePage.setStartDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      programUpdatePage.setEndDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM')
+      programUpdatePage.setEndDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      programUpdatePage.eventSelectLastOption()
     ]);
     expect(await programUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await programUpdatePage.getDescInput()).to.eq('desc', 'Expected Desc value to be equals to desc');

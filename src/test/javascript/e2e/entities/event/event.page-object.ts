@@ -32,7 +32,7 @@ export class EventUpdatePage {
   imageInput = element(by.id('file_image'));
   startDateInput = element(by.id('field_startDate'));
   endDateInput = element(by.id('field_endDate'));
-  programSelect = element(by.id('field_program'));
+  participantSelect = element(by.id('field_participant'));
 
   async getPageTitle() {
     return this.pageTitle.getText();
@@ -86,23 +86,23 @@ export class EventUpdatePage {
     return await this.endDateInput.getAttribute('value');
   }
 
-  async programSelectLastOption(timeout?: number) {
-    await this.programSelect
+  async participantSelectLastOption(timeout?: number) {
+    await this.participantSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async programSelectOption(option) {
-    await this.programSelect.sendKeys(option);
+  async participantSelectOption(option) {
+    await this.participantSelect.sendKeys(option);
   }
 
-  getProgramSelect(): ElementFinder {
-    return this.programSelect;
+  getParticipantSelect(): ElementFinder {
+    return this.participantSelect;
   }
 
-  async getProgramSelectedOption() {
-    return await this.programSelect.element(by.css('option:checked')).getText();
+  async getParticipantSelectedOption() {
+    return await this.participantSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

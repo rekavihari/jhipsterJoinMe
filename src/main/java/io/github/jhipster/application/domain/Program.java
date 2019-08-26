@@ -1,4 +1,5 @@
 package io.github.jhipster.application.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -6,8 +7,6 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Program.
@@ -48,9 +47,9 @@ public class Program implements Serializable {
     @Column(name = "end_date")
     private Instant endDate;
 
-    @OneToMany(mappedBy = "program")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Event> events = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties("programs")
+    private Event event;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -165,29 +164,17 @@ public class Program implements Serializable {
         this.endDate = endDate;
     }
 
-    public Set<Event> getEvents() {
-        return events;
+    public Event getEvent() {
+        return event;
     }
 
-    public Program events(Set<Event> events) {
-        this.events = events;
+    public Program event(Event event) {
+        this.event = event;
         return this;
     }
 
-    public Program addEvent(Event event) {
-        this.events.add(event);
-        event.setProgram(this);
-        return this;
-    }
-
-    public Program removeEvent(Event event) {
-        this.events.remove(event);
-        event.setProgram(null);
-        return this;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
+    public void setEvent(Event event) {
+        this.event = event;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -48,7 +48,6 @@ describe('Participant e2e test', () => {
       participantUpdatePage.setEmailInput('email'),
       participantUpdatePage.setPhoneInput('5'),
       participantUpdatePage.setImageInput(absolutePath)
-      // participantUpdatePage.eventSelectLastOption(),
     ]);
     expect(await participantUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await participantUpdatePage.getEmailInput()).to.eq('email', 'Expected Email value to be equals to email');

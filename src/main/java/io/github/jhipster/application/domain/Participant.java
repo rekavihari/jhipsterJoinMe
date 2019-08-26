@@ -1,4 +1,5 @@
 package io.github.jhipster.application.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -38,11 +39,9 @@ public class Participant implements Serializable {
     @Column(name = "image_content_type")
     private String imageContentType;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "participants")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "participant_event",
-               joinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<Event> events = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

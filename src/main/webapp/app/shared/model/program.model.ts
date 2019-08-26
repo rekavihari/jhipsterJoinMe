@@ -11,7 +11,7 @@ export interface IProgram {
   longitude?: number;
   startDate?: Moment;
   endDate?: Moment;
-  events?: IEvent[];
+  event?: IEvent;
 }
 
 export class Program implements IProgram {
@@ -25,6 +25,6 @@ export class Program implements IProgram {
     public longitude?: number,
     public startDate?: Moment,
     public endDate?: Moment,
-    public events?: IEvent[]
+    public event?: IEvent
   ) {}
 }

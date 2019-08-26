@@ -34,11 +34,11 @@
                 <dd>
                     <span>{{event.endDate}}</span>
                 </dd>
-                <dt><span>Program</span></dt>
+                <dt><span>Participant</span></dt>
                 <dd>
-                    <div *ngIf="event.program">
-                        <a [routerLink]="['/program', event.program?.id, 'view']">{{event.program?.id}}</a>
-                    </div>
+                    <span *ngFor="let participant of event.participants; let last = last">
+                        <a [routerLink]="['/participant', participant?.id, 'view' ]">{{participant.email}}</a>{{last ? '' : ', '}}
+                    </span>
                 </dd>
             </dl>
 

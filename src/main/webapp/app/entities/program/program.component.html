@@ -25,6 +25,7 @@
             <th jhiSortBy="longitude"><span>Longitude</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="startDate"><span>Start Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="endDate"><span>End Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="event.name"><span>Event</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -43,6 +44,11 @@
                 <td>{{program.longitude}}</td>
                 <td>{{program.startDate | date:'medium'}}</td>
                 <td>{{program.endDate | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="program.event">
+                        <a [routerLink]="['/event', program.event?.id, 'view' ]" >{{program.event?.name}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

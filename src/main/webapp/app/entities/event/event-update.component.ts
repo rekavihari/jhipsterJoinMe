@@ -11,8 +11,6 @@ import { IEvent, Event } from 'app/shared/model/event.model';
 import { EventService } from './event.service';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { ParticipantService } from 'app/entities/participant';
-import { IProgram } from 'app/shared/model/program.model';
-import { ProgramService } from 'app/entities/program';
 
 @Component({
   selector: 'jhi-event-update',
@@ -23,8 +21,6 @@ export class EventUpdateComponent implements OnInit {
 
   participants: IParticipant[];
 
-  programs: IProgram[];
-
   editForm = this.fb.group({
     id: [],
     name: [],
@@ -34,7 +30,7 @@ export class EventUpdateComponent implements OnInit {
     imageContentType: [],
     startDate: [],
     endDate: [],
-    program: []
+    participants: []
   });
 
   constructor(
@@ -42,7 +38,6 @@ export class EventUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected eventService: EventService,
     protected participantService: ParticipantService,
-    protected programService: ProgramService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -60,13 +55,6 @@ export class EventUpdateComponent implements OnInit {
         map((response: HttpResponse<IParticipant[]>) => response.body)
       )
       .subscribe((res: IParticipant[]) => (this.participants = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.programService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IProgram[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IProgram[]>) => response.body)
-      )
-      .subscribe((res: IProgram[]) => (this.programs = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(event: IEvent) {
@@ -79,7 +67,7 @@ export class EventUpdateComponent implements OnInit {
       imageContentType: event.imageContentType,
       startDate: event.startDate != null ? event.startDate.format(DATE_TIME_FORMAT) : null,
       endDate: event.endDate != null ? event.endDate.format(DATE_TIME_FORMAT) : null,
-      program: event.program
+      participants: event.participants
     });
   }
 
@@ -151,7 +139,7 @@ export class EventUpdateComponent implements OnInit {
       startDate:
         this.editForm.get(['startDate']).value != null ? moment(this.editForm.get(['startDate']).value, DATE_TIME_FORMAT) : undefined,
       endDate: this.editForm.get(['endDate']).value != null ? moment(this.editForm.get(['endDate']).value, DATE_TIME_FORMAT) : undefined,
-      program: this.editForm.get(['program']).value
+      participants: this.editForm.get(['participants']).value
     };
   }
 
@@ -172,10 +160,6 @@ export class EventUpdateComponent implements OnInit {
   }
 
   trackParticipantById(index: number, item: IParticipant) {
-    return item.id;
-  }
-
-  trackProgramById(index: number, item: IProgram) {
     return item.id;
   }
 

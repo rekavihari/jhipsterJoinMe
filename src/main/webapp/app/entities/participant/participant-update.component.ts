@@ -25,8 +25,7 @@ export class ParticipantUpdateComponent implements OnInit {
     email: [],
     phone: [],
     image: [],
-    imageContentType: [],
-    events: []
+    imageContentType: []
   });
 
   constructor(
@@ -60,8 +59,7 @@ export class ParticipantUpdateComponent implements OnInit {
       email: participant.email,
       phone: participant.phone,
       image: participant.image,
-      imageContentType: participant.imageContentType,
-      events: participant.events
+      imageContentType: participant.imageContentType
     });
   }
 
@@ -129,8 +127,7 @@ export class ParticipantUpdateComponent implements OnInit {
       email: this.editForm.get(['email']).value,
       phone: this.editForm.get(['phone']).value,
       imageContentType: this.editForm.get(['imageContentType']).value,
-      image: this.editForm.get(['image']).value,
-      events: this.editForm.get(['events']).value
+      image: this.editForm.get(['image']).value
     };
   }
 
