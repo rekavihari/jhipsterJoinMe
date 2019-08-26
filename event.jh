@@ -1,7 +1,7 @@
 entity Participant {
 	name String required,
     email String required,
-    phone Integer,
+    phone Long,
     image ImageBlob
 }
 
